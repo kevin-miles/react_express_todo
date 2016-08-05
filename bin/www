@@ -13,7 +13,6 @@ var http = require('http');
 var MongoClient = app.get('mongo client');
 var mongoAddress = app.get('mongo address');
 MongoClient.connect(mongoAddress, function(err, db) {
-  err = true;
   if(err) {
     console.error('Failed to connect to MongoDB at', mongoAddress);
   } else {
