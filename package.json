@@ -1,5 +1,6 @@
 {
   "name": "react_express_todo",
+  "description": "A todo app written with express + react + mongo",
   "version": "0.0.0",
   "private": true,
   "scripts": {
