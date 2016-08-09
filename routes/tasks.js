@@ -15,9 +15,9 @@ router.get('/', function(req, res, next) {
 });
 
 /* DELETE tasks */
-router.delete('/', function(req, res, next) {
+router.delete('/:id', function(req, res, next) {
     var db = req.app.get('db');
-    var taskId = req.body.taskId;
+    var taskId = req.params.id;
     console.log(taskId);
     if(!taskId){
         res.status(404).send('A task must be provided');
@@ -30,7 +30,7 @@ router.delete('/', function(req, res, next) {
             } else if (result.deletedCount < 1) {
                 res.status(404).send('The provided task does not exist');
             } else {
-                res.status(200).send();
+                res.json([]);
             }
         });
     }
@@ -45,11 +45,11 @@ router.post('/', function(req, res, next) {
         res.status(404).send('A task must be provided');
     } else {
         var query = {status: status, task: task};
-        db.collection('tasks').insert(query, function(err, records){
+        db.collection('tasks').insert(query, function(err, record){
             if(err){
                 res.status(500).send('Error saving new task');
             } else {
-                res.status(200).send();
+                res.json([]);
             }
         });
     }
@@ -70,7 +70,7 @@ router.put('/', function(req, res, next) {
             if(err) {
                 res.status(500).send('Error updating the task');
             } else {
-                res.status(200).send();
+                res.json([]);
             }
         });
     }
