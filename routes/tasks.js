@@ -18,7 +18,6 @@ router.get('/', function(req, res, next) {
 router.delete('/:id', function(req, res, next) {
     var db = req.app.get('db');
     var taskId = req.params.id;
-    console.log(taskId);
     if(!taskId){
         res.status(404).send('A task must be provided');
     } else {
