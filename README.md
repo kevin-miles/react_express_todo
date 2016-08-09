@@ -1,2 +1,2 @@
 # react_express_todo
-a react + express todo app
+A ToDo app written with express + react + mongo
