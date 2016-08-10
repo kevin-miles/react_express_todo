@@ -61,11 +61,11 @@ router.put('/', function(req, res, next) {
     var status = req.body.status;
     var task = req.body.task;
 
-    if(!task || !status || !taskId){
+    if(!taskId || !status || !task){
         res.status(404).send('A task must be provided');
     } else {
-        var query = {id: taskId, status: status, task: task};
-        db.collection('tasks').updateOne({'_id':taskId}, {$set:{status: status, task: task}})(function (err, result) {
+        taskId = new mongodb.ObjectID(taskId);
+        db.collection('tasks').updateOne({'_id':taskId}, {$set:{status: status, task: task}}, {multi: false}, function (err, result) {
             if(err) {
                 res.status(500).send('Error updating the task');
             } else {
