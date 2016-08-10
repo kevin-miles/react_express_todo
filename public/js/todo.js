@@ -60,11 +60,26 @@ var TodoList = React.createClass({
             }.bind(this)
         });
     },
+    handleTaskChange: function (q) {
+        $.ajax({
+            url: this.props.url,
+            dataType: 'json',
+            type: 'PUT',
+            data: q,
+            success: function(data) {
+                this.props.loadTasks();
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+    },
     render: function() {
         var handleTaskDelete = this.handleTaskDelete;
+        var handleTaskChange = this.handleTaskChange;
         var tasks = this.props.data.map(function (task) {
             return (
-                <TodoTask onTaskDelete={handleTaskDelete} id={task._id} status={task.status} task={task.task}>
+                <TodoTask onTaskChange={handleTaskChange} onTaskDelete={handleTaskDelete} id={task._id} status={task.status} task={task.task}>
                 </TodoTask>
             );
         });
@@ -100,31 +115,45 @@ var TodoForm = React.createClass({
                     placeholder="Task"
                     value={this.state.task}
                     onChange={this.handleTaskChange}
+                    className="todoCreate"
                 />
-                <input type="submit" value="Create" />
+                <input type="submit" className="todoSubmit" value="Create" />
             </form>
         );
     }
 });
 
 var TodoTask = React.createClass({
+    getInitialState: function() {
+        return {task: this.props.task, status: this.props.status, id: this.props.id};
+    },
     handleDelete: function(e) {
         e.preventDefault();
-        var taskId = e.target.parentNode.getAttribute("data-id");
+        var taskId = e.target.getAttribute("data-id");
         this.props.onTaskDelete(taskId);
+    },
+    handleTaskChange: function(e) {
+        var taskId = e.target.getAttribute("data-id");
+        var task = e.target.value;
+        var status = e.target.getAttribute("data-status");
+        var query = {taskId: taskId, task: task, status: status};
+        this.setState({task: e.target.value});
+        this.props.onTaskChange(query);
     },
     render: function() {
         return (
-            <div className="taskContainer" data-id={this.props.id} data-status={this.props.status}>
-
-                    <form className="todoFormDelete" onSubmit={this.handleDelete}>
-                        <p className="task">
-                            {this.props.task}
-                        </p>
+            <div className="taskContainer">
+                <input
+                    data-id={this.state.id}
+                    data-status={this.state.status}
+                    type="text"
+                    className="task"
+                    value={this.state.task}
+                    onChange={this.handleTaskChange}
+                />
+                    <form data-id={this.state.id} className="todoFormDelete" onSubmit={this.handleDelete}>
                         <input className="delete" type="submit" value="Delete" />
                     </form>
-
-
             </div>
         );
     }
