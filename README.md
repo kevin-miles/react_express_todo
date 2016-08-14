@@ -10,6 +10,12 @@ A responsive web application for task management using React, Express, MongoDB, 
     * for development: `npm run dev`
     * for production: `npm start`
 
+## Screenshots
+### Desktop
 ![desktop](https://raw.githubusercontent.com/kevin-miles/react_express_todo/master/docs/desktop.png)
+
+### Tablet
 ![tablet](https://raw.githubusercontent.com/kevin-miles/react_express_todo/master/docs/tablet.png)
+
+### Mobile
 ![mobile](https://raw.githubusercontent.com/kevin-miles/react_express_todo/master/docs/mobile.png)
