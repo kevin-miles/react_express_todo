@@ -1,10 +1,16 @@
 {
   "name": "react_express_todo",
   "description": "A todo app written with express + react + mongo",
-  "version": "0.0.0",
+  "author": "kevin-miles",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "build": "webpack --progress",
+    "webpack-watch": "webpack -w",
+    "express-server": "node ./server",
+    "dev": "concurrently --kill-others \"npm run webpack-watch\" \"npm run start\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
@@ -16,5 +22,14 @@
     "morgan": "~1.7.0",
     "node-sass-middleware": "0.8.0",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.13.2",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-react": "^6.11.1",
+    "concurrently": "^2.2.0",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
   }
 }
